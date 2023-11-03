@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visualização em Tempo Real</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            background-color: #222; /* Cor de fundo escura */
+            color: #fff; /* Cor do texto clara */
+            font-family: Arial, sans-serif; /* Fonte para o texto */
+        }
+        h1 {
+            color: #00f; /* Cor do título */
+        }
+        #plot {
+            background-color: #333; /* Cor de fundo do gráfico */
+        }
+    </style>
+</head>
+<body>
+    <h1>Monitoramento em Tempo Real do Vaores em dB da Região</h1>
+    
+    <div id="plot"></div>
+
+    <script>
+        // Função para atualizar o gráfico com os dados do servidor
+        function updatePlot() {
+            Plotly.d3.json('/get_data1', function(data) {
+                var tempoData = data.map(item => item.tempo);
+                var sensorData = data.map(item => item.valor_sensor);
+
+                var trace = {
+                    x: tempoData,
+                    y: sensorData,
+                    mode: 'lines+markers',
+                    type: 'scatter',
+                    line: { color: '#00f' } /* Cor da linha do gráfico */
+                };
+
+                var layout = {
+                    xaxis: {
+                        title: 'Tempo',
+                        color: '#fff' /* Cor do texto do eixo x */
+                    },
+                    yaxis: {
+                        title: 'Valor do Sensor',
+                        color: '#fff' /* Cor do texto do eixo y */
+                    },
+                    plot_bgcolor: '#333', /* Cor de fundo do gráfico */
+                    paper_bgcolor: '#222' /* Cor de fundo da página */
+                };
+
+                var plotData = [trace];
+                var plotLayout = layout;
+
+                Plotly.newPlot('plot', plotData, plotLayout);
+            });
+        }
+
+        // Chame a função de atualização do gráfico imediatamente e, em seguida, a cada 5 segundos
+        updatePlot();
+        setInterval(updatePlot, 5000);
+    </script>
+</body>
+</html>

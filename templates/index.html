@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gráfico MongoDB</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div id="plot"></div>
+
+    <script>
+        function updatePlot() {
+            $.ajax({
+                url: '/get_data',
+                success: function (data) {
+                    var servoData = data.servo_data;
+                    var sensorData = data.sensor_data;
+
+                    var trace = {
+                        x: servoData,
+                        y: sensorData,
+                        mode: 'markers',
+                        type: 'scatter'
+                    };
+
+                    var layout = {
+                        xaxis: {
+                            title: 'Valor do Servo'
+                        },
+                        yaxis: {
+                            title: 'Valor do Sensor'
+                        }
+                    };
+
+                    Plotly.newPlot('plot', [trace], layout);
+                }
+            });
+        }
+
+        // Atualize o gráfico a cada 5 segundos (ou conforme necessário)
+        setInterval(updatePlot, 5000);
+    </script>
+</body>
+</html>
