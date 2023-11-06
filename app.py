@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, jsonify
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+import pymongo 
 
 app = Flask(__name__)
 # Conectando ao banco de dados cluster0 do projeto radar
@@ -65,6 +66,15 @@ def get_data1():
             'valor_sensor': float(doc["valor_sensor"])
         })
     return jsonify(data)
+
+@app.route('/radar')
+def radar():
+    # Get the latest servo angle from the MongoDB collection
+    latest_data = collection.find_one(sort=[("tempo", pymongo.DESCENDING)])
+    servo_angle = latest_data["valor_servo"] if latest_data else 0  # Default to 0 degrees if no data
+
+    return render_template('radar.html', servo_angle=servo_angle)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80)
