@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radar Display</title>
     <style>
+        /* Add CSS styles for the radar display here */
         .radar {
             width: 300px;
             height: 300px;
-            background: url('radar-background-image.png');
+            background: url('radar-background-image.png'); /* Use your radar background image */
             position: relative;
         }
         .blip {
@@ -27,7 +28,9 @@
         <div class="blip" id="blip"></div>
     </div>
     <script>
+
         
+        // JavaScript function to update the blip's position
         function updateBlipPosition(angle) {
             const blip = document.getElementById('blip');
             const radar = document.querySelector('.radar');
@@ -39,6 +42,9 @@
             const y = radarCenterY + radius * Math.sin(angleInRadians);
             blip.style.transform = `translate(${x}px, ${y}px) rotate(${angle}deg)`;
         }
+
+        // Call the updateBlipPosition function with the servo_angle variable
+        updateBlipPosition({servo_angle});
     </script>
 </body>
 </html>
