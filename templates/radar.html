@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar Display</title>
+    <style>
+        .radar {
+            width: 300px;
+            height: 300px;
+            background: url('radar-background-image.png');
+            position: relative;
+        }
+        .blip {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            transform-origin: center;
+            transform: translate(-50%, -50%) rotate(0deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="radar">
+        <div class="blip" id="blip"></div>
+    </div>
+    <script>
+        
+        function updateBlipPosition(angle) {
+            const blip = document.getElementById('blip');
+            const radar = document.querySelector('.radar');
+            const radarCenterX = radar.offsetWidth / 2;
+            const radarCenterY = radar.offsetHeight / 2;
+            const radius = radarCenterX - blip.offsetWidth / 2;
+            const angleInRadians = (angle - 90) * (Math.PI / 180);
+            const x = radarCenterX + radius * Math.cos(angleInRadians);
+            const y = radarCenterY + radius * Math.sin(angleInRadians);
+            blip.style.transform = `translate(${x}px, ${y}px) rotate(${angle}deg)`;
+        }
+    </script>
+</body>
+</html>
