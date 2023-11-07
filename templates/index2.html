@@ -5,19 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Violations</title>
     <style>
+        body {
+            background-color: #1f1f1f; /* Dark background color */
+            color: #ffffff; /* Light text color */
+        }
+        
         table {
             border-collapse: collapse;
             width: 100%;
+            background-color: #333; /* Dark table background color */
         }
+        
         th, td {
-            border: 1px solid black;
+            border: 1px solid #555; /* Dark border color */
             padding: 8px;
             text-align: center;
         }
     </style>
 </head>
 <body>
-    <h1>POSSIVEIS VIOLAÇÕES</h1>
+    <h1>Violations</h1>
     <table>
         <tr>
             <th>ID</th>
@@ -27,18 +34,53 @@
             <th>Percentagem de Anomalias</th>
             <th>Média de Anomalias</th>
             <th>Tipo de Violacao</th>
+            <th>Ações</th>
         </tr>
         {% for violation in violations %}
             <tr>
                 <td>{{ violation._id }}</td>
                 <td>{{ violation.angulo }}</td>
-                <td>{{ violation.inicio_intervalo }}</td>
-                <td>{{ violation.fim_intervalo }}</td>
+                <td>{{ violation.inicio_intervalo.tempo }}</td>
+                <td>{{ violation.fim_intervalo.tempo }}</td>
                 <td>{{ violation.percentagem_anomalias }}</td>
                 <td>{{ violation.media_anomalias }}</td>
                 <td>{{ violation.tipo_violacao }}</td>
+                <td>
+                    <button onclick="printViolationRow(this.parentNode.parentNode)">Print</button>
+                    <button onclick="exportViolation('{{ violation._id }}')">Export</button>
+                    <button onclick="acessaGravacao('{{ violation._id }}')">Acessa Gravação</button>
+                </td>
             </tr>
         {% endfor %}
     </table>
+    
+    <script>
+       function printViolationRow(row) {
+    // Clone the row to create a standalone table with only the selected row
+    const clonedTable = document.createElement('table');
+    clonedTable.appendChild(row.cloneNode(true));
+    
+    // Create a new document to contain the cloned table
+    const newWindow = window.open('', '_blank');
+    newWindow.document.open();
+    newWindow.document.write('<html><head><title>Print Violation</title></head><body>');
+    newWindow.document.write(clonedTable.outerHTML);
+    newWindow.document.write('</body></html>');
+    newWindow.document.close();
+
+    // Print the newly created document
+    newWindow.print();
+    newWindow.close();
+}
+
+        
+        function exportViolation(violationId) {
+          
+        }
+        
+        function acessaGravacao(violationId) {
+            
+        }
+    </script>
 </body>
 </html>

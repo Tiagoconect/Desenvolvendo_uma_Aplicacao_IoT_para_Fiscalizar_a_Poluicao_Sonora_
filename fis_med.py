@@ -8,6 +8,8 @@ colecao = db["tratando_testeH"]
 
 # Criar uma nova coleção para valores que violaram os limites
 colecao_violacoes = db["violacoes"]
+colecao_violacoes.delete_many({})  # Remove todos os documentos da coleção "violacoes"
+
 
 # Limites de decibéis permitidos
 limite_dB_dia = 50  # Limite durante o dia
@@ -29,8 +31,9 @@ for documento in colecao.find():
     # Converta as horas para o formato de hora com segundos
     hora_inicio_intervalo = datetime.strptime(inicio_intervalo, "%H:%M:%S").time()
     hora_fim_intervalo = datetime.strptime(fim_intervalo, "%H:%M:%S").time()
+    tipo_violacao = None
     if percentagem_anomalias > 10:
-        tipo_violacao = None
+    
         print(f"Ângulo do Servo: {angulo}, Percentual de Anomalia: {percentagem_anomalias:.2f}%")
         print(f"Média das Anomalias: {media_anomalias:.2f}")
         if anomalous_values:
@@ -59,7 +62,7 @@ for documento in colecao.find():
                 "tipo_violacao": tipo_violacao
             }
             # Inserir o documento na coleção de violações
-            colecao_violacoes.insert_one(documento_violacao)
+            colecao_violacoes.insert_one(documento_violacao)   
 
 
 
