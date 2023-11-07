@@ -57,6 +57,12 @@ def get_data():
 def index1():
     return render_template('index1.html')
 
+colecao_violacoes = db["violacoes"]
+@app.route('/index2')
+def index2():
+    violations = list(colecao_violacoes.find())
+    return render_template('index2.html',violations=violations)
+
 @app.route('/get_data1')
 def get_data1():
     data = []

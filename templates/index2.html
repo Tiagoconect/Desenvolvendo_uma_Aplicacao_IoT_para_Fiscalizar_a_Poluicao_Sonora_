@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Violations</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>POSSIVEIS VIOLAÇÕES</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Angulo</th>
+            <th>Início Intervalo</th>
+            <th>Fim Intervalo</th>
+            <th>Percentagem de Anomalias</th>
+            <th>Média de Anomalias</th>
+            <th>Tipo de Violacao</th>
+        </tr>
+        {% for violation in violations %}
+            <tr>
+                <td>{{ violation._id }}</td>
+                <td>{{ violation.angulo }}</td>
+                <td>{{ violation.inicio_intervalo }}</td>
+                <td>{{ violation.fim_intervalo }}</td>
+                <td>{{ violation.percentagem_anomalias }}</td>
+                <td>{{ violation.media_anomalias }}</td>
+                <td>{{ violation.tipo_violacao }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
